@@ -1,0 +1,15 @@
+{
+    "Version": "1.0",
+    "NodeInfo": {
+        "NodeId": "0.0.0.0",
+        "ApiPort": "38412"
+    },
+    "GrpcClientInfo": {
+        "ClientIP": "grpcnasamf-service.nasmm.svc.cluster.local",
+        "ClientPort": "50052"
+    },
+    "GrpcServerInfo":{
+		"ServerIP": "0.0.0.0",
+		"ServerPort": "50055"
+	}
+}

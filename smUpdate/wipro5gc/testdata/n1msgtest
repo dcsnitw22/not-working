@@ -1,0 +1,35 @@
+Protocol discriminator = 0x7e 
+Security header = 0x1 
+Auth code = 0x749766c9
+Sequence number = 0x03
+Protocol discriminator = 0x7e 
+Security header = 0x0
+Message type = 0x4c
+ngKSI:
+  TSC = 0
+  NAS key set identifier = 0
+Service type = 0x01
+5G-S-TMSI:
+  5G-S-TMSI
+    AMF Set ID = 4
+    AMF Pointer = 1
+    5G-TMSI = 0x82fbff80
+NAS message container:
+  Protocol discriminator = 0x7e
+  Security header = 0x0
+  Message type = 0x4c
+  ngKSI:
+    TSC = 0
+    NAS key set identifier = 0
+  Service type = 0x01
+  5G-S-TMSI:
+    5G-S-TMSI
+      AMF Set ID = 4
+      AMF Pointer = 1
+      5G-TMSI = 0x82fbff80
+  Uplink data status:
+    0x20 (PSI(7)=0,PSI(6)=0,PSI(5)=1,PSI(4)=0,PSI(3)=0,PSI(2)=0,PSI(1)=0)
+    0x00 (PSI(15)=0,PSI(14)=0,PSI(13)=0,PSI(12)=0,PSI(11)=0,PSI(10)=0,PSI(9)=0,PSI(8)=0)
+  PDU session status:
+    0x20 (PSI(7)=0,PSI(6)=0,PSI(5)=1,PSI(4)=0,PSI(3)=0,PSI(2)=0,PSI(1)=0)
+    0x00 (PSI(15)=0,PSI(14)=0,PSI(13)=0,PSI(12)=0,PSI(11)=0,PSI(10)=0,PSI(9)=0,PSI(8)=0)

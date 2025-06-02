@@ -1,0 +1,23 @@
+{
+    "Version": "1.0",
+    "NodeInfo": {
+        "NodeId": "127.0.0.1",
+        "ApiPort": ":8080"
+    },
+    "N11AmfNodes": [
+        {
+            "NodeId": "csp-service.csp.svc.cluster.local",
+            "Port": "8083"
+        }
+    ],
+    "GrpcServerInfo":{
+        "ServerIP": "127.0.0.1",
+        "ServerPort": "50051"
+    },
+    "GrpcClientInfo":{
+        "ClientIPUpfgw": "127.0.0.1",
+		"ClientPortUpfgw": "50052",
+		"ClientIPNgap": "ngap-svc.ngap.svc.cluster.local",
+		"ClientPortNgap": "50055"
+    }
+}

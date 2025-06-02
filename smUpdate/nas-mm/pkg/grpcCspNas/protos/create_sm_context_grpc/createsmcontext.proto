@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package create_sm_context;
+
+option go_package = "./create_sm_context_grpc";
+
+service SendDataForCreateSmContext {
+  rpc SendDataForCreateSmContext(CreateSmContextDataFromNasMod) returns (CreateSmContextRespToNasMod) {}
+}
+
+message snssai {
+	int32 Sst = 1;
+	string Sd = 2;
+}
+
+message plmnId {
+	string Mcc = 1;
+	string Mnc = 2;
+}
+
+message tai {
+	plmnId PlmnId = 1;
+	string Tac = 2;
+}
+
+message ncgi {
+	plmnId PlmnId = 1;
+	string NrCellId = 2;
+}
+
+message NrLocation {
+	tai Tai = 1;
+	ncgi Ncgi = 2;
+	int32 AgeOfLocationInformation = 3;
+	google.protobuf.Timestamp UeLocationTimestamp = 4;
+	string GeographicalInformation = 5;
+	string GeodeticInformation = 6;
+	int32 GlobalGnbId = 7;
+}
+
+message CreateSmContextDataFromNasMod {
+  string AnType = 1;
+  snssai Snssai = 2;
+  NrLocation NrLocation = 3;
+  int32 PduSessionId = 4;
+  bytes N1SmContainer = 5;
+  string supi = 6;
+}
+
+message CreateSmContextRespToNasMod {
+  string errMessage = 1;
+}

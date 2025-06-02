@@ -1,0 +1,170 @@
+syntax = "proto3";
+
+package grpcSmfNas;
+
+import "google/protobuf/any.proto";
+
+option go_package = "./pb";
+
+service SmfNas {
+  rpc HandleEstablishment(EstRequest) returns (EstResponse);
+  rpc HandleUpdateRelease(UpRelRequest) returns (UpRelRespone);
+}
+
+
+//Release Procedure related Models
+
+//PDU session Release Request Model
+message PDUSRelReqModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+  string smCause = 5;
+}
+//PDU session Release Reject Model
+message PDUSRelRejModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+  string smCause = 5;
+}
+//PDU session Release Command Model
+message PDUSRelCommandModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+  string smCause = 5;
+}
+//PDU session Release Complete Model
+message PDUSRelCompleteModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+  string smCause = 5;
+}
+
+//PDU session Modification Reject Model
+message PDUSModRejModel{
+  string epd =1;
+  int32 pdusessionID =2;
+  int32 pti =3;
+  string msgType=4;
+  string smCause =5;  
+}
+
+//PDU session Modification Request Model
+message PDUSModReqModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+}
+
+//Update Or Release Request Model
+message UpRelRequest{
+  string reqType = 1;
+  google.protobuf.Any nasRelMsg =2;
+
+}
+
+//Update or Release Respone Model
+message UpRelRespone{
+  google.protobuf.Any nasResponse = 1;
+  string reqType =2;
+  string error = 3;
+
+}
+
+//PDU session Establishment Request Model
+message PDUSEstReqModel{
+  string epd =1;
+  optional int32 pdusessionID =2;
+  optional int32 pti =3;
+  string msgType=4;
+  string datarateUL=5;
+  string datarateDL=6;
+}
+
+//PDU session Establishment Reject Model
+message PDUSEstRejModel{
+  string epd =1;
+  int32 pdusessionID =2;
+  int32 pti =3;
+  string msgType=4;
+  string smCause =5;  
+}
+
+
+
+//Packet Filter Model for Delete
+//message PFModDel{
+//  uint32 identifier =1;
+//}
+
+//Packet Filter Model for other modes
+message PacketFilters{
+  uint32 identifier =1;
+  string direction=2;
+  repeated string components =3;
+}
+
+//Packet Filter Model
+//message PacketFilters{
+//  google.protobuf.Any pf = 1;    
+//}
+
+//Qos Rules Model
+message QosRules{
+  string qosidentifier =1;
+  string operation=2;
+  string dqr=3;
+  repeated PacketFilters pf=4;
+  uint32 precidence =5;
+  string seg=6;
+  string qfi=7;
+}
+
+//Session AMBR model
+message Sessionambr{
+  int32 iei =1;
+  string unitUL =2;
+  int32 rateUL = 3;
+  string unitDL =4;
+  int32 rateDL = 5;
+}
+
+//PDU session Establishment Accept Model
+message PDUSEstAccModel{
+  string epd =1;
+  int32 pdusessionID =2;
+  int32 pti =3;
+  string msgType=4;
+  string pdusType=5;
+  string sscMode=6;
+  int32 qosIEI=7;
+  repeated QosRules qosrules=8;
+  Sessionambr sessionambr =9;
+  string Si6lla=10;
+	string PduSessionTypeVal=11;
+	string PduAddrInfo=12;
+}
+
+message ByteDataWrapper{
+  bytes byteArray = 1;
+}
+
+//Est Procedure Request structure
+message EstRequest {
+  google.protobuf.Any nasMessage = 1; 
+  string typeReq =2;
+}
+
+//Est Procedure Response structure
+message EstResponse {
+  google.protobuf.Any nasResponse = 1;  
+  string error = 2;
+}

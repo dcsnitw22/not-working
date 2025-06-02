@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package grpcNgapNas;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./pb";
+
+service DataService {
+  rpc SendData(DataRequest) returns (DataResponse) {}
+}
+
+message Snssai {
+	int32 Sst = 1;
+	string Sd = 2;
+}
+
+message PlmnId {
+	string Mcc = 1;
+	string Mnc = 2;
+}
+
+message Tai {
+	PlmnId PlmnId = 1;
+	string Tac = 2;
+}
+
+message Ncgi {
+	PlmnId PlmnId = 1;
+	string NrCellId = 2;
+}
+
+message NrLocation {
+	Tai Tai = 1;
+	Ncgi Ncgi = 2;
+	int32 AgeOfLocationInformation = 3;
+	google.protobuf.Timestamp UeLocationTimestamp = 4;
+	string GeographicalInformation = 5;
+	string GeodeticInformation = 6;
+	int32 GlobalGnbId = 7;
+}
+
+message CreateSmContext {
+  string AnType = 1;
+  Snssai Snssai = 2;
+  NrLocation NrLocation = 3;
+  int32 PduSessionId = 4;
+  bytes N1SmContainer = 5;
+}
+
+message NasMessage {
+  bytes NasPdu = 1;
+}
+
+message DataRequest{
+  google.protobuf.Any data = 1;
+}
+
+message DataResponse {
+  //for Type, 0 means NAS-MM and 1 means NAS-SM. If Type is 0, NasPdu should not be nil.
+  bool Type = 1;
+  string Error = 2;
+  bytes NasPdu = 3;
+}

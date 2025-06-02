@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package grpc;
+option go_package = "./protos";
+
+service N1N2Message {
+  rpc SendN1N2MessageTransferData (N1N2MessageTransferDataRequest) returns (N1N2MessageTransferDataResponse) {}
+}
+
+message N1N2MessageTransferDataResponse {
+  string status = 1;
+  string error = 2;
+}
+
+message N1N2MessageTransferDataRequest {
+  string smContextID = 1;
+  string ueContextID = 2;
+  string ngapleType = 3;
+  string tunnelEndpointAdr = 4;
+  string gtpteid = 5;
+
+}
+
+

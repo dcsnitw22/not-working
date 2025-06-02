@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package pdusession;
+
+option go_package="./pdusession";
+
+enum Session_Type {
+  ipv4 = 0;
+  ipv6 = 1;
+  ipv4v6 = 2;
+  ethernet = 3;
+  unstructured = 4;
+}
+
+// The establishmnet service definition.
+service establishment {
+  // Sends a PDU session resource setup request
+  rpc SendPduSessionResourceSetupRequest (PduSessionResourceSetupRequest) returns (PduSessionResourceSetupResponse) {}
+
+}
+
+// The PDU session resource setup request message definition
+message PduSessionResourceSetupRequest {
+  int32 message_type = 1;
+  int32 amf_ue_ngap_id = 2; 
+  int32 ran_ue_ngap_id = 3;
+  int32 session_id = 4;
+  Session_Type session_type = 5;
+  int32 qfi = 6;
+  string gtpu_dl_teid = 7;
+  string session_ambr = 8;
+  string ue_ambr = 9;
+  string mfbr = 10;
+  string snssai = 11;
+  string sess_naspdu = 12;
+  string naspdu_len = 13;
+}
+
+// The PDU session resource setup response message definition
+message PduSessionResourceSetupResponse {
+  int32 message_type = 1;
+  int32 amf_ue_ngap_id = 2; 
+  int32 ran_ue_ngap_id = 3;
+  int32 session_id = 4;
+  string endpoint_ip = 5;
+  string gtpu_ul_teid = 6;
+  int32 qfi = 7;
+}

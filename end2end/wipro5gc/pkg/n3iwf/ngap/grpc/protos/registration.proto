@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package registration;
+
+option go_package = "./registration";
+
+//The registration service definition.
+service authentication {
+  // Sends a registration Request 
+  rpc SendRegistration (InitialUEmessage) returns (DownlinkNasMessage) {}
+
+  // Sends a Initialcontextsetup Request
+  rpc SendInitialcontextsetuprequest (InitialContextSetupRequest) returns (InitialContextSetupResponse) {}
+
+}
+
+// The initial context setup request message containing the n3iwf key 
+message InitialContextSetupRequest {
+  int32 message_type = 1;
+  int32 amf_ue_ngap_id = 2; 
+  int32 ran_ue_ngap_id = 3;
+  string plmn_id = 4;
+  string amf_region_id = 5;
+  string amf_set_id = 6;
+  string amf_pointer = 7; 
+  string n3iwfkey = 8;
+}
+
+// The initial context setup response message
+message InitialContextSetupResponse {
+  int32 message_type = 1;
+  int32 amf_ue_ngap_id = 2; 
+  int32 ran_ue_ngap_id = 3;
+  }
+
+// The request message containing registration request
+message InitialUEmessage {
+  int32 message_type = 1;
+  int32 ran_ue_ngap_id = 2;
+  string nas_pdu = 3;
+}
+// The response message registration accept
+message DownlinkNasMessage {
+  int32 message_type = 1;
+  int32 amf_ue_ngap_id = 2; 
+  int32 ran_ue_ngap_id = 3;
+  string nas_pdu = 4;
+}

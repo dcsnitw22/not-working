@@ -1,0 +1,20 @@
+{
+    "pduSessionId": 123,
+    "supi": "2278771263098765",
+    "dnn": "airtelgprs.com",
+    "servingNfId": "3fa85f64-5717-4562-nwi3-2c963f66afa6",
+    "smContextStatusUri": "https://example.com/notify/smcontextstatus",
+    "servingNetwork": {
+        "mcc": "286",
+        "mnc": "01"
+    },
+    "anType": "3GPP_ACCESS",
+    "pei": "280129383791827",
+    "guami": {
+        "plmnId": {
+            "mcc": "286",
+            "mnc": "01"
+        },
+        "amfId": "218A9E"
+    }
+}

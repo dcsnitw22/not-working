@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package CscPdusmsp;
+
+option go_package = "./CscPdusmsp";
+
+service SmContextData {
+  rpc SendCreateSmContextData(CreateSmContextData) returns (CreateSmContextResponse) {}
+  rpc SendReleaseSmContextData(ReleaseSmContextData) returns (ReleaseSmContextResponse) {}
+}
+
+message snssai {
+	int32 Sst = 1;
+	string Sd = 2;
+}
+
+message plmnId {
+	string Mcc = 1;
+	string Mnc = 2;
+}
+
+message tai {
+	plmnId PlmnId = 1;
+	string Tac = 2;
+}
+
+message ncgi {
+	plmnId PlmnId = 1;
+	string NrCellId = 2;
+}
+
+message NrLocation {
+	tai Tai = 1;
+	ncgi Ncgi = 2;
+	int32 AgeOfLocationInformation = 3;
+	google.protobuf.Timestamp UeLocationTimestamp = 4;
+	string GeographicalInformation = 5;
+	string GeodeticInformation = 6;
+	int32 GlobalGnbId = 7;
+}
+
+message CreateSmContextData {
+  string AnType = 1;
+  snssai Snssai = 2;
+  NrLocation NrLocation = 3;
+  int32 PduSessionId = 4;
+  bytes N1SmContainer = 5;
+}
+
+message CreateSmContextResponse {
+  string errMessage = 1;
+}
+
+message ReleaseSmContextData{
+
+
+}
+
+message ReleaseSmContextResponse{
+	string errMessage = 1;
+}

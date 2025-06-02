@@ -1,0 +1,238 @@
+{
+    "pduSessionId": 64,
+    "supi": "2278771263098765",
+    "dnn": "airtelgprs.com",
+    "servingNfId": "3fa85f64-5717-4562-nwi3-2c963f66afa6",
+    "smContextStatusUri": "https://example.com/notify/smcontextstatus",
+    "servingNetwork": {
+        "mcc": "286",
+        "mnc": "01"
+    },
+    "anType": "3GPP_ACCESS",
+    "pei": "280129383791827",
+    "guami": {
+        "plmnId": {
+            "mcc": "286",
+            "mnc": "01"
+        },
+        "amfId": "218A9E"
+    },
+    "sNssai":{
+        "sst": 12,
+        "sd": "highspeed"
+    },
+    "hplmnSnssai":{
+        "sst": 11,
+        "sd": "midspeed"
+    },
+    "ueLocation":{
+        "eutraLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "ecgi": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "eutraCellId": "5BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6008",
+            "geodeticInformation": "5BD600822D60081234",
+            "globalNgenbId": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "n3IwfId": "A2139",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "nrLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "ncgi": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "nrCellId": "225BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6009",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalGnbId": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "n3gaLocation": {
+            "n3gppTai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "n3IwfId": "87878756",
+            "ueIpv4Addr": "198.51.100.1",
+            "ueIpv6Addr": "2001:db8:85a3::8a2e:370:7334",
+            "portNumber": 0
+        }
+    },
+    "addUeLocation": {
+        "eutraLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "ecgi": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "eutraCellId": "5BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6009",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalNgenbId": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "nrLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "ncgi": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "nrCellId": "225BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6008",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalGnbId": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "n3gaLocation": {
+            "n3gppTai": {
+                "plmnId": {
+                    "mcc": "286",
+                    "mnc": "01"
+                },
+                "tac": "000001"
+            },
+            "n3IwfId": "87878756",
+            "ueIpv4Addr": "198.51.100.1",
+            "ueIpv6Addr": "2001:db8:85a3::8a2e:370:7334",
+            "portNumber": 0
+        }
+    },
+    "backupAmfInfo": [
+        {
+            "backupAmf": "218A9F",
+            "guamiList": [
+                {
+                    "plmnId": {
+                        "mcc": "286",
+                        "mnc": "01"
+                    },
+                    "amfId": "1927AE"
+                }
+            ]
+        }
+    ],
+    "traceData":{
+        "traceRef": "20793-faa80E", // pattern ^[0-9]{3}[0-9]{2,3}-[A-Fa-f0-9]{6}$
+        "traceDepth": "MEDIUM",
+        "neTypeList": "fa357242E955EBA7eac7A1294Ab3B",
+        "eventList": "ebdcCD9bDec779C5aDED2Fadf1"
+        // "CollectionEntityIpv4Addr": ,
+        // "CollectionEntityIpv4Addr":,
+        // "interfaceList":,
+        
+    },
+    "targetId": {
+        "ranNodeId": {
+            "plmnId": {
+                "mcc": "286",
+                "mnc": "01"
+            },
+            "n3IwfId": "17263",
+            "gNbId": {
+                "bitLength": 22,
+                "gNBValue": "2A3F47"
+            },
+            "ngeNbId": "SMacroNGeNB-34B89"
+        },
+        "tai": {
+            "plmnId": {
+                "mcc": "286",
+                "mnc": "01"
+            },
+            "tac": "000001"
+        }
+    },
+    "serviceName": "nsmf-pdusession",
+    "RequestType": "RequestType",
+    "RatType":"NR",
+    "presenceInLadn": "IN", //check in 29571 once
+    "epsInterworkingInd": "WITHOUT_N26",
+    "hoState":"NONE",
+    "selMode": "VERIFIED"
+}

@@ -1,0 +1,14 @@
+{
+    "supi": "imsi-<IMSI>",
+    "pduSessionId": 235,
+    "dnn": "<DNN>",
+    "sNssai": {
+      "sst": 0
+    },
+    "servingNfId": "<AMF Identifier>",
+    "n1SmMsg": {
+      "contentId": "n1msg"
+    },
+    "anType": "3GPP_ACCESS",
+    "smContextStatusUri": "<URI>"
+}

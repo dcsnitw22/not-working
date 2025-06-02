@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = "./";
+
+service SendSmContextData {
+  rpc SendSmContextCreateData (SmContextCreateDataRequest) returns (SmContextCreateDataResponse) {}
+  rpc SendSmContextUpdateData (SmContextUpdateDataRequest) returns (SmContextUpdateDataResponse) {}
+  rpc SendSmContextReleaseData (SmContextReleaseDataRequest) returns (SmContextReleaseDataResponse) {}
+}
+
+message SmContextCreateDataRequest {
+  string supi = 1;
+  bool unauthenticated_supi = 2;
+  string pei = 3;
+  string gpsi = 4;
+  int32 pdu_session_id = 5;
+  string dnn = 6;
+  string serving_nf_id = 7;
+  Guami guami = 8; // Guami type DONE
+  string service_name = 9; // ServiceName type STRING DONE
+  PlmnId serving_network = 10; // PlmnId type DONE
+  string request_type = 11; // RequestType type STRING DONE
+  N1SmMessage n1_sm_message = 12;
+  string an_type = 13; // AccessType type STRING DONE
+  string rat_type = 14; // RatType type STRING DONE
+  string sm_context_status_uri = 15;
+}
+
+message N1SmMessage {
+  PduSessionEstablishmentRequest pdu_session_establishment_request = 1;
+}
+
+message PduSessionEstablishmentRequest {
+  int32 pdu_session_id = 1;
+  string pdu_session_type = 2;
+  int32 ssc_mode = 3;
+}
+
+message Guami {
+  PlmnId plmn_id = 1;
+  string amf_id = 2;
+}
+
+message PlmnId {
+  string mcc = 1;
+  string mnc = 2;
+}
+
+message SmContextCreateDataResponse {
+  int32 pdu_session_id = 1;
+}
+
+message SmContextUpdateDataRequest {
+  string pei = 1;
+  string serving_nf_id = 2;
+  string sm_context_status_uri = 3;
+  Guami guami = 4;
+  PlmnId serving_network = 5; // PlmnId type DONE
+  int32 pdu_session_id = 6;
+  N2SmInformation n2_sm_info = 7;
+}
+
+message N2SmInformation {
+  PduSessionResourceSetupRequestTransfer pdu_session_resource_setup_request_transfer = 1;
+}
+
+message PduSessionResourceSetupRequestTransfer {
+  string gtp_tunnel_endpoint_ip_address = 1;
+  string gtp_teid = 2;
+  string pdu_session_type = 3;
+  int32 qfi = 4;
+  QosFlowLevelQosParameters qos_flow_level_qos_parameters = 5;
+}
+
+message QosFlowLevelQosParameters {
+  int32 fqi = 1;
+  Arp arp = 2; 
+  GbrQoSFlowInformation gbr_qos_flow_information = 3;
+}
+
+message Arp {
+  string priority_level = 1;
+  string preemption_capability = 2;
+  string preemption_vulnerability = 3;
+}
+
+message GbrQoSFlowInformation {
+  int32 maximum_flow_bitrate_downlink = 1;
+  int32 maximum_flow_bitrate_uplink = 2;
+  int32 guaranteed_flow_bitrate_downlink = 3;
+  int32 guaranteed_flow_bitrate_uplink = 4;
+}
+
+message SmContextUpdateDataResponse {
+  int32 pdu_session_id = 1;
+}
+
+message SmContextReleaseDataRequest {
+  string pei = 1;
+  string serving_nf_id = 2;
+  string sm_context_status_uri = 3;
+  Guami guami = 4;
+  PlmnId serving_network = 5; // PlmnId type DONE
+  int32 pdu_session_id = 6;
+  int32 extended_protocal_discriminator = 7;
+  int32 pti = 8;
+  int32 pdu_session_release_request_message_identity = 9;
+}
+
+message SmContextReleaseDataResponse {
+  int32 pdu_session_id = 1;
+}

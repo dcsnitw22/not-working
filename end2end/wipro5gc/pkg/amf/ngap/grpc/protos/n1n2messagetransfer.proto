@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = "./protos";
+
+service N1N2DataTransfer {
+    rpc SendN1N2DataTransfer(N1N2Data) returns (Error) {}
+}
+
+message N1N2Data {
+    bytes N1DataBytes = 1;
+    bytes N2DataBytes = 2;
+    string UeContextId = 3;
+}
+
+message Error {
+    string err = 1;
+}

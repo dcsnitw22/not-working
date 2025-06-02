@@ -1,0 +1,17 @@
+{
+    "Version": "1.0",
+    "NodeInfo": {
+        "NodeId": "127.0.0.1",
+        "ApiPort": ":8083"
+    },
+    "N11SmfNodes": [
+        {
+            "NodeId": "pdusmsp-service.pdusmsp.svc.cluster.local",
+            "Port": "8080"
+        }
+    ],
+    "GrpcServerInfo" : {
+        "ServerIP": "0.0.0.0",
+        "ServerPort": "50054"
+    }
+}

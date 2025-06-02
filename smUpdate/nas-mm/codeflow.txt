@@ -1,0 +1,3 @@
+grpcCspNas --> To send data from nas to csp --> PDU Session Establishment Request
+grpcNgap --> To send data from nas to Ngap --> Downlink N1 Data & N2 
+ngapNas --> To handle uplink & registration req from ngap || To handle downlink request from csp

@@ -1,0 +1,25 @@
+{
+    "Version": "1.0",
+    "NodeInfo": {
+        "NodeId": "0.0.0.0",
+        "ApiPort": "38412"
+    },
+    "GrpcClientInfo": {
+        "ClientIP": "grpcnasamf-service.nasmm.svc.cluster.local",
+        "ClientPort": "50052"
+    },
+    "GrpcServerInfo":{
+		"ServerIPPdusmsp": "0.0.0.0",
+		"ServerPortPdusmsp": "50055",
+        "ServerIPNas": "0.0.0.0",
+		"ServerPortNas": "50056"
+	},
+    "DbInfo":{
+        "Redis": {
+            "IP": "redis.redis.svc.cluster.local",
+            "Port": "6379",
+            "Pass": "redisWipro",
+            "Db": 2
+        }
+    }
+}

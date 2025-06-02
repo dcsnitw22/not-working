@@ -1,0 +1,242 @@
+{
+  "5gMmCauseValue": 0,
+  "addUeLocation": {
+    "eutraLocation": {
+      "ageOfLocationInformation": 32767,
+      "ecgi": {
+        "eutraCellId": "5BD6007",
+        "plmnId": {
+          "mcc": "",
+          "mnc": ""
+        }
+      },
+      "geodeticInformation": "5BD600822D60081230",
+      "geographicalInformation": "5BD600822D6009",
+      "globalNgenbId": {
+        "gNbId": {
+          "bitLength": 32,
+          "gNBValue": "12345999"
+        },
+        "n3IwfId": "87878756",
+        "ngeNbId": "SMacroNGeNB-34B89",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "tai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": "63F84B"
+      },
+      "ueLocationTimestamp": "2023-07-03T20:24:16.446Z"
+    },
+    "n3gaLocation": {
+      "n3IwfId": "87878756",
+      "n3gppTai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": "63F84B"
+      },
+      "portNumber": 0,
+      "ueIpv4Addr": "198.51.100.1",
+      "ueIpv6Addr": {}
+    },
+    "nrLocation": {
+      "ageOfLocationInformation": 32767,
+      "geodeticInformation": "5BD600822D60081230",
+      "geographicalInformation": "5BD600822D6008",
+      "globalGnbId": {
+        "gNbId": {
+          "bitLength": 32,
+          "gNBValue": "12345999"
+        },
+        "n3IwfId": "87878756",
+        "ngeNbId": "SMacroNGeNB-34B89",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "ncgi": {
+        "nrCellId": "225BD6007",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "tai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": "63F84B"
+      },
+      "ueLocationTimestamp": "2023-07-03T20:24:16.446Z"
+    }
+  },
+  "anType": "3GPP_ACCESS",
+  "anTypeCanBeChanged": false,
+  "backupAmfInfo": [
+    {
+      "backupAmf": "218A9F",
+      "guamiList": [
+        {
+          "amfId": "1927AE",
+          "plmnId": {
+            "mcc": "404",
+            "mnc": "10"
+          }
+        }
+      ]
+    }
+  ],
+  "dataForwarding": false,
+  "epsBearerSetup": [
+    "string"
+  ],
+  "failedToBeSwitched": true,
+  "guami": {
+    "amfId": "218A9E",
+    "plmnId": {
+      "mcc": "404",
+      "mnc": "10"
+    }
+  },
+  "n1SmMsg": {
+    "contentId": "n1smmsg27183"
+  },
+  "n2SmInfo": {
+    "contentId": "n2sminfo10296"
+  },
+  "n2SmInfoExt1": {
+    "contentId": "n2sminfoext109172"
+  },
+  "ngApCause": {
+    "group": 1,
+    "value": 1
+  },
+  "pei": "280129383791827",
+  "ratType": "NR",
+  "release": false,
+  "revokeEbiList": [
+    15
+  ],
+  "sNssai": {
+    "sd": "123456",
+    "sst": 255
+  },
+  "servingNetwork": {
+    "mcc": "404",
+    "mnc": "10"
+  },
+  "servingNfId": "3fa85f64-5717-4562-nwi3-2c963f66afa6",
+  "smContextStatusUri": "https://example.com/notify/smcontextstatus",
+  "targetId": {
+    "ranNodeId": {
+      "gNbId": {
+        "bitLength": 22,
+        "gNBValue": "2A3F47"
+      },
+      "n3IwfId": "17263",
+      "ngeNbId": "SMacroNGeNB-34B89",
+      "plmnId": {
+        "mcc": "404",
+        "mnc": "10"
+      }
+    },
+    "tai": {
+      "plmnId": {
+        "mcc": "404",
+        "mnc": "10"
+      },
+      "tac": "63F84B"
+    }
+  },
+  "targetServingNfId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "toBeSwitched": false,
+  "ueLocation": {
+    "eutraLocation": {
+      "ageOfLocationInformation": 32767,
+      "ecgi": {
+        "eutraCellId": "5BD6007",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "geodeticInformation": "5BD600822D60081234",
+      "geographicalInformation": "5BD600822D6008",
+      "globalNgenbId": {
+        "gNbId": {
+          "bitLength": 32,
+          "gNBValue": "12345999"
+        },
+        "n3IwfId": "A2139",
+        "ngeNbId": "SMacroNGeNB-34B89",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "tai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": " 63F84B"
+      },
+      "ueLocationTimestamp": "2023-07-03T20:24:16.446Z"
+    },
+    "n3gaLocation": {
+      "n3IwfId": "87878756",
+      "n3gppTai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": "63F84B"
+      },
+      "portNumber": 0,
+      "ueIpv4Addr": "198.51.100.1",
+      "ueIpv6Addr": {}
+    },
+    "nrLocation": {
+      "ageOfLocationInformation": 32767,
+      "geodeticInformation": "5BD600822D60081230",
+      "geographicalInformation": "5BD600822D6009",
+      "globalGnbId": {
+        "gNbId": {
+          "bitLength": 32,
+          "gNBValue": "12345999"
+        },
+        "n3IwfId": "87878756",
+        "ngeNbId": "SMacroNGeNB-34B89",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "ncgi": {
+        "nrCellId": "225BD6007",
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        }
+      },
+      "tai": {
+        "plmnId": {
+          "mcc": "404",
+          "mnc": "10"
+        },
+        "tac": "63F84B"
+      },
+      "ueLocationTimestamp": "2023-07-03T20:24:16.446Z"
+    }
+  },
+  "ueTimeZone": "+02:00"
+}

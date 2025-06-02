@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package grpc;
+import "sm_context.proto";
+
+option go_package = "./protos";
+
+service N2InfoNgapEncoder {
+    rpc SendN2Info(N2Information) returns (EncodedN2Information) {}
+}
+
+message N2Information{
+    string gtp_tunnel_endpoint_ip_address = 1;
+    string gtp_teid = 2; //gtp tunnel endpoint ID
+    int32 qfi = 3;
+    QosFlowLevelQosParameters qos_flow_level_qos_parameters = 4;
+    uint32 pdu_session_type = 5;
+}
+
+message EncodedN2Information{
+    bytes encoded_data = 1;
+    string error = 2;
+}

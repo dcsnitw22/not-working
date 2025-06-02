@@ -1,0 +1,12 @@
+package nas
+
+func decimalTo16BitBytes(n int) []byte {
+	// Ensure the number fits within 16 bits
+	if n < 0 || n > 65535 {
+		panic("Number out of range for 16-bit conversion")
+	}
+	// Convert to two bytes
+	byte1 := byte((n >> 8) & 0xFF) // Higher 8 bits
+	byte2 := byte(n & 0xFF)        // Lower 8 bits
+	return []byte{byte1, byte2}
+}

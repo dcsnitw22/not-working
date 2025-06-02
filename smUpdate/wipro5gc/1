@@ -1,0 +1,40 @@
+package api
+
+import (
+        "time"
+        //"net"
+        "k8s.io/klog"
+
+        //"w5gc.io/wipro5gcore/openapi"
+)
+
+const (
+        GrpcChannelCapacity = 100
+)
+
+type GrpcMessage  string
+
+type Grpc interface {
+        Start()
+	WatchGrpcChannel()(chan *GrpcMessage)
+}
+
+type GrpcInfo struct {
+        grpcStartTime     time.Time
+        grpcChannel       chan *GrpcMessage
+}
+
+func NewGrpc() Grpc {
+                return &GrpcInfo {
+                grpcChannel: make(chan *GrpcMessage, ApiChannelCapacity),
+        }
+}
+
+func (g *GrpcInfo) Start() {
+	klog.Infof("Started pdusmsp grpc server")
+}
+
+
+func (g *GrpcInfo) WatchGrpcChannel() {
+	return g.grpcChannel
+}

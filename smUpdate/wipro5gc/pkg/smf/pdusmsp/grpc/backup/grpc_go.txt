@@ -1,0 +1,164 @@
+package grpc
+
+import (
+	context "context"
+	"fmt"
+	"log"
+	"net"
+	"time"
+
+	//"net"
+
+	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	"k8s.io/klog"
+
+	//"w5gc.io/wipro5gcore/openapi"
+	"w5gc.io/wipro5gcore/pkg/smf/pdusmsp/config"
+	"w5gc.io/wipro5gcore/pkg/smf/pdusmsp/grpc/protos"
+	"w5gc.io/wipro5gcore/pkg/smf/pdusmsp/sm"
+)
+
+const (
+	GrpcChannelCapacity = 100
+)
+
+type GrpcMessageInfo interface{}
+
+type GrpcMessage struct {
+	MsgType sm.MessageType
+	GrpcMsg *GrpcMessageInfo
+}
+
+type Grpc interface {
+	Start()
+	WatchGrpcChannel() chan *GrpcMessage
+
+	SendSmContextCreateData(*protos.SmContextCreateDataRequest)
+	SendSmContextUpdateData(*protos.SmContextUpdateDataRequest)
+	SendSmContextReleaseData(*protos.SmContextReleaseDataRequest)
+}
+
+type GrpcInfo struct {
+	grpcStartTime time.Time
+	//grpcChannel *GrpcMessage
+	ConnAddr   string
+	ServerIP   string
+	Port       string
+	grpcClient protos.SendSmContextDataClient
+	grpcServer GrpcServer
+}
+
+func NewGrpc(cfg config.GrpcServerInfoConfig) Grpc {
+	ch := make(chan *GrpcMessage, GrpcChannelCapacity)
+	return &GrpcInfo{
+		ServerIP:   cfg.ServerIP,
+		ConnAddr:   "127.0.0.1:50052",
+		grpcServer: GrpcServer{Ch: ch},
+	}
+}
+
+func (g *GrpcInfo) SendSmContextCreateData(createData *protos.SmContextCreateDataRequest) {
+	client := g.grpcClient
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	defer cancel()
+	// createData := &SmContextCreateDataRequest{
+	// 	Pei:          "Pei",
+	// 	Dnn:          "Dnn",
+	// 	PduSessionId: 11,
+	// }
+	r, err := client.SendSmContextCreateData(ctx, createData)
+	if err != nil {
+		klog.Fatalf("Error. Could not get response: %v", err)
+	}
+	klog.Infof("Response from server: %d", r.GetPduSessionId())
+}
+
+func (g *GrpcInfo) SendSmContextUpdateData(updateData *protos.SmContextUpdateDataRequest) {
+	client := g.grpcClient
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	defer cancel()
+	res, err := client.SendSmContextUpdateData(ctx, updateData)
+	// updateData := &SmContextUpdateDataRequest{
+	// 	Pei:         "Pei",
+	// 	ServingNfId: "ServingNfId",
+	// 	N2SmInfo:    &N2SmInformation{},
+	// 	Guami: &Guami{
+	// 		AmfId: "amfid1",
+	// 	},
+	// }
+	if err != nil {
+		klog.Fatalf("Error. Could not get response: %v", err)
+	}
+	klog.Infof("Response from server: %d", res.GetPduSessionId())
+}
+
+func (g *GrpcInfo) SendSmContextReleaseData(releaseData *protos.SmContextReleaseDataRequest) {
+	client := g.grpcClient
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	defer cancel()
+	res, err := client.SendSmContextReleaseData(ctx, releaseData)
+	// releaseData := &SmContextUpdateDataRequest{
+	// 	Pei:         "Pei",
+	// 	ServingNfId: "ServingNfId",
+	// 	Guami: &Guami{
+	// 		AmfId: "amfid1",
+	// 	},
+	// }
+	if err != nil {
+		klog.Fatalf("Error. Could not get response: %v", err)
+	}
+	klog.Infof("Response from server: %d", res.GetPduSessionId())
+}
+
+func (g *GrpcInfo) Start() {
+	go g.StartServer()
+	klog.Infof("Started pdusmsp gRPC server")
+
+	// Get UPFGW address and then dial
+	conn, err := grpc.Dial(g.ConnAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		klog.Fatalf("Dial error. Did not connect: %v", err)
+	}
+	g.grpcClient = protos.NewSendSmContextDataClient(conn)
+}
+
+func (g *GrpcInfo) WatchGrpcChannel() chan *GrpcMessage {
+	return g.grpcServer.Ch
+}
+
+// Server side code ========
+
+type GrpcServer struct {
+	protos.UnimplementedN1N2MessageServer
+	Ch chan *GrpcMessage
+}
+
+func (s *GrpcServer) SendN1N2MessageTransferData(ctx context.Context, in *protos.N1N2MessageTransferDataRequest) (*protos.N1N2MessageTransferDataResponse, error) {
+	// Receive the data here
+	n1n2Data := GrpcMessageInfo(in)
+	// fmt.Println(n1n2Data)
+	go func() {
+		s.Ch <- &GrpcMessage{
+			MsgType: 1,
+			GrpcMsg: &n1n2Data,
+		}
+	}()
+	return &protos.N1N2MessageTransferDataResponse{
+		PduSessionId: in.PduSessionId,
+	}, nil
+}
+
+func (g *GrpcInfo) StartServer() {
+	fmt.Println("GrpcServerInfo: ", g.ServerIP)
+	lis, err := net.Listen("tcp", "127.0.0.1:50051")
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	server := grpc.NewServer()
+	protos.RegisterN1N2MessageServer(server, &g.grpcServer)
+	log.Printf("server listening at %v", lis.Addr())
+	if err := server.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
+}

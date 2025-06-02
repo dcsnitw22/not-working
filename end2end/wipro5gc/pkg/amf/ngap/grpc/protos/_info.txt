@@ -1,0 +1,3 @@
+ngapNas - provided by Mounika for ngap<->nasmm communication, where ngap is client
+n1n2messagetransfer.proto - for ngap<->nasmm communication, where ngap is server
+n2info.proto - for ngap<->pdusmsp communication, where ngap is server

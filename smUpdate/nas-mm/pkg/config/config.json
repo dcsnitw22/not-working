@@ -1,0 +1,16 @@
+{
+    "CspGrpc":{
+        "CspServerIP": "csp-service.csp.svc.cluster.local",
+        "CspServerPort": "50054"
+    },
+    "NgapNas":{
+        "NgapServerIP": "0.0.0.0",
+        "NgapServerPort": "50052"
+
+    },
+	"DLNgap":{
+        "DLNgapServerIP":"",
+        "DLNgapServerPort":""
+	
+	}
+}

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: pod
+spec:
+  containers:
+    - name: docker
+      # image: docker:19.03
+      image: custom-docker-3:latest
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+      privileged: true
+      volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+  volumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock

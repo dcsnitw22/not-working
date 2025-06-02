@@ -1,0 +1,224 @@
+{
+    "pduSessionId": 0,
+    "supi": "imsi-015605705",
+    "unauthenticatedSupi":true,
+    "epsBearerId":[1234],
+    "anType":"3GPP_ACCESS",
+    "dnn": "airtelgprs.com",
+    "servingNfId": "3fa85f64-5717-4562-nwi3-2c963f66afa6",
+    "smContextStatusUri": "https://example.com/notify/smcontextstatus",
+    "servingNetwork": {
+        "mcc": "404",
+        "mnc": "10"
+    },
+    "pei": "280129383791827",
+    "guami": {
+        "plmnId": {
+            "mcc": "404",
+            "mnc": "10"
+        },
+        "amfId": "218A9E"
+    },
+    "sNssai":{
+        "sst": 12,
+        "sd": "highspeed"
+    },
+    "hplmnSnssai":{
+        "sst": 11,
+        "sd": "midspeed"
+    },
+    "addUeLocation": {
+        "eutraLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": "63F84B"
+            },
+            "ecgi": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "eutraCellId": "5BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6009",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalNgenbId": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "nrLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": "63F84B"
+            },
+            "ncgi": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "nrCellId": "225BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6008",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalGnbId": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "n3gaLocation": {
+            "n3gppTai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": "63F84B"
+            },
+            "n3IwfId": "87878756",
+            "ueIpv4Addr": "198.51.100.1",
+            "portNumber": 0
+        }
+    },
+    "ueLocation":{
+        "eutraLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": " 63F84B"
+            },
+            "ecgi": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "eutraCellId": "5BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6008",
+            "geodeticInformation": "5BD600822D60081234",
+            "globalNgenbId": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "n3IwfId": "A2139",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "nrLocation": {
+            "tai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": "63F84B"
+            },
+            "ncgi": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "nrCellId": "225BD6007"
+            },
+            "ageOfLocationInformation": 32767,
+            "ueLocationTimestamp": "2023-07-03T20:24:16.446Z",
+            "geographicalInformation": "5BD600822D6009",
+            "geodeticInformation": "5BD600822D60081230",
+            "globalGnbId": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "n3IwfId": "87878756",
+                "gNbId": {
+                    "bitLength": 32,
+                    "gNBValue": "12345999"
+                },
+                "ngeNbId": "SMacroNGeNB-34B89"
+            }
+        },
+        "n3gaLocation": {
+            "n3gppTai": {
+                "plmnId": {
+                    "mcc": "404",
+                    "mnc": "10"
+                },
+                "tac": "63F84B"
+            },
+            "n3IwfId": "87878756",
+            "ueIpv4Addr": "198.51.100.1",
+            "portNumber": 0
+        }
+    },
+    "backupAmfInfo": [
+        {
+            "backupAmf": "218A9F",
+            "guamiList": [
+                {
+                    "plmnId": {
+                        "mcc": "404",
+                        "mnc": "10"
+                    },
+                    "amfId": "1927AE"
+                }
+            ]
+        }
+    ],
+    "targetId": {
+        "ranNodeId": {
+            "plmnId": {
+                "mcc": "404",
+                "mnc": "10"
+            },
+            "n3IwfId": "17263",
+            "gNbId": {
+                "bitLength": 22,
+                "gNBValue": "2A3F47"
+            },
+            "ngeNbId": "SMacroNGeNB-34B89"
+        },
+        "tai": {
+            "plmnId": {
+                "mcc": "404",
+                "mnc": "10"
+            },
+            "tac": "63F84B"
+        }
+    },
+    "n1SmMsg":{
+        "contentId":"n1msgtest"
+    }
+}
