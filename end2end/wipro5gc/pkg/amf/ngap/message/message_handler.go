@@ -10,6 +10,7 @@ import (
 	"w5gc.io/wipro5gcore/asn1gen"
 	"w5gc.io/wipro5gcore/openapi/openapi_commn_client"
 	"w5gc.io/wipro5gcore/pkg/amf/context"
+	"w5gc.io/wipro5gcore/pkg/amf/metrics"
 	"w5gc.io/wipro5gcore/pkg/amf/ngap/db/redis"
 	"w5gc.io/wipro5gcore/pkg/amf/ngap/grpc"
 )
@@ -21,6 +22,9 @@ var Ran *context.AmfRan
 
 // routing function
 func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.RedisClient) {
+	// Update connection metric
+	metrics.UpdateGauge(metrics.NgapConnections, 1)
+
 	sdVal := "1"
 	Ran = &context.AmfRan{
 		RanId: &openapi_commn_client.GlobalRanNodeId{
@@ -64,6 +68,8 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 	_, err := asn1gen.Unmarshal(msg, pdu)
 	if err != nil {
 		klog.Info("NGAP Decode error: ", err.Error())
+		metrics.UpdateCounterVec(metrics.RegistrationFailures, 1, "decode_error")
+		return
 	} else {
 		klog.Infoln("NGAPPDU unmarshaling done successfully")
 	}
@@ -73,6 +79,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		//NG Setup
 		if pdu.U.InitiatingMessage.ProcedureCode == asn1gen.Asn1vIdNGSetup {
 			klog.Info("RECEIVED NG SETUP MESSAGE")
+			metrics.UpdateCounter(metrics.RegistrationAttempts)
 			HandleNGSetupRequest(Ran, pdu)
 		}
 		//Uplink NAS
@@ -83,6 +90,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		//Initial UE
 		if pdu.U.InitiatingMessage.ProcedureCode == asn1gen.Asn1vIdInitialUEMessage {
 			klog.Info("RECEIVED INITIAL UE MESSAGE")
+			metrics.UpdateCounter(metrics.CreateAttempts)
 			HandleInitialUEMessage(Ran, pdu, grpc, client)
 		}
 		//Downlink NAS
@@ -99,6 +107,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		//Error Indication
 		if pdu.U.InitiatingMessage.ProcedureCode == asn1gen.Asn1vIdErrorIndication {
 			klog.Info("RECEIVED ERROR INDICATION MESSAGE")
+			metrics.UpdateCounterVec(metrics.RegistrationFailures, 1, "error_indication")
 			HandleErrorIndicationFromRan(Ran, pdu)
 		}
 	} else if pdu.T == asn1gen.NGAPPDUSuccessfulOutcomeTAG {
@@ -112,6 +121,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		//PDU Session Resource Setup Response
 		if pdu.U.SuccessfulOutcome.ProcedureCode == asn1gen.Asn1vIdPDUSessionResourceSetup {
 			klog.Info("RECEIVED PDU SESSION RESOURCE SETUP RESPONSE")
+			metrics.UpdateCounter(metrics.CreateSuccess)
 			HandlePduSessionResourceSetupResponse(Ran, pdu)
 		}
 
@@ -119,6 +129,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		if pdu.U.SuccessfulOutcome.ProcedureCode == asn1gen.Asn1vIdInitialContextSetup {
 			klog.Info("RECEIVED INITIAL CONTEXT SETUP RESPONSE")
 			os.WriteFile("initialContextSetupResponse", msg, 0644)
+			metrics.UpdateCounter(metrics.RegistrationSuccess)
 			HandleInitialContextSetupResponse(Ran, pdu)
 		}
 	} else if pdu.T == asn1gen.NGAPPDUUnsuccessfulOutcomeTAG {
@@ -126,6 +137,7 @@ func HandleMessage(conn net.Conn, msg []byte, grpc *grpc.Grpc, client *redis.Red
 		//Initial Context Setup Failure
 		if pdu.U.SuccessfulOutcome.ProcedureCode == asn1gen.Asn1vIdInitialContextSetup {
 			klog.Info("RECEIVED INITIAL CONTEXT SETUP FAILURE")
+			metrics.UpdateCounterVec(metrics.RegistrationFailures, 1, "context_setup_failure")
 			HandleInitialContextSetupFailure(Ran, pdu)
 		}
 	} else {

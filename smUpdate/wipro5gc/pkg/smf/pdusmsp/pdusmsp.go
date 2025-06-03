@@ -32,6 +32,7 @@ import (
 
 	// "w5gc.io/wipro5gcore/pkg/smf/pdusmsp/grpc"
 	"w5gc.io/wipro5gcore/pkg/smf/pdusmsp/sm"
+	"w5gc.io/wipro5gcore/utils/metrics"
 )
 
 const (
@@ -345,11 +346,12 @@ func (p *Pdusmsp) dispatchWork(sessionId sessions.SessionId,
 				// Handle on completion of session update
 				if err == nil {
 					klog.Infof("Successfully handled pdusms  for session %s", sessionId)
-					//metrics.SessionWorkerDuration.WithLabelValues(syncType.String()).Observe(metrics.SinceInSeconds(start))
+					metrics.UpdateCounter(metrics.AmfcreateSessionSuccess)
 				} else {
 					// Log error and update cause with request rejected
 					klog.Info(err)
 					klog.Errorf("Unable to handle pdusms for session %s", sessionId)
+					metrics.UpdateCounterVec(metrics.CreateFailures, 1, "session_handling_error")
 				}
 			},
 		})
@@ -359,18 +361,16 @@ func (p *Pdusmsp) dispatchWork(sessionId sessions.SessionId,
 	p.sessionWorkers.HandleSessionMessages(&SessionMessageInfo{
 		SessionId: sessionId,
 		StartTime: startTime,
-		PdusmsMsg: *sessionMsg,
-		GrpcMsg:   grpcserver.GrpcMessage{},
-		MsgType:   msgType,
+		PdusmsMsg: sessionMsg,
 		OnCompleteFunc: func(err error) {
 			// Handle on completion of session update
 			if err == nil {
-				klog.Infof("Successfully handled pdusms  for session %s", sessionId)
-				//metrics.SessionWorkerDuration.WithLabelValues(syncType.String()).Observe(metrics.SinceInSeconds(start))
+				klog.Infof("Successfully handled pdusms for session %d", sessionId)
+				metrics.UpdateCounter(metrics.AmfcreateSessionSuccess)
 			} else {
 				// Log error and update cause with request rejected
-				klog.Info(err)
-				klog.Errorf("Unable to handle pdusms for session %s", sessionId)
+				klog.Errorf("Unable to handle pdusms for session %d: %v", sessionId, err)
+				metrics.UpdateCounterVec(metrics.CreateFailures, 1, "session_handling_error")
 			}
 		},
 	})
@@ -381,62 +381,42 @@ func (p *Pdusmsp) dispatchWork(sessionId sessions.SessionId,
 // handleSession handles the pdu session message in a session worker
 func (p *Pdusmsp) handleSession(msgInfo SessionMessageInfo) error {
 	// Get the required message info
-	klog.Info("inside")
 	msgType := msgInfo.MsgType
-	pdusmsMsg := msgInfo.PdusmsMsg
-	// grpc->myfunction(process/dbupdate)->callruchi'sfunction
+
 	// Process remote node requests/responses
 	switch msgType {
 	case sm.NSMF_CREATE_SM_CONTEXT_REQUEST:
+		metrics.UpdateCounter(metrics.AmfcreateProcess)
 		// Process pdusms create request
-		//sm.ProcessNsmfCreateSmContextRequest(pdusmsMsg)
-		n1SmMessage := pdusmsMsg.BinaryDataN1SmMessage
-		jsonData := pdusmsMsg.SessionMsg
-		smData := jsonData.(openapiserver.SmContextCreateData)
-		resp, err := p.sessionManager.ProcessNsmfCreateSmContextRequest(smData, n1SmMessage)
-		chanRec := p.apiServer.WatchRecChannel()
-		chanRec <- &api.Receiver{RecievedResponse: resp, RecievedErr: err}
-		return err
+		if err := sm.ProcessNsmfCreateSmContextRequest(msgInfo.PdusmsMsg); err != nil {
+			metrics.UpdateCounterVec(metrics.CreateFailures, 1, "create_context_error")
+			return err
+		}
+		metrics.UpdateCounter(metrics.AmfcreateSessionSuccess)
+		
 	case sm.NSMF_UPDATE_SM_CONTEXT_REQUEST:
+		metrics.UpdateCounter(metrics.AmfupdateProcess)
 		// Process pdusms update request
-		n1SmMessage := pdusmsMsg.BinaryDataN1SmMessage
-		n2SmMessage := pdusmsMsg.BinaryDataN2SmInformation
-		n2SmExt1Message := pdusmsMsg.BinaryDataN2SmInformationExt1
-		smcontextref := pdusmsMsg.SmContextRefID
-		jsonData := pdusmsMsg.SessionMsg
-		smData := jsonData.(openapiserver.SmContextUpdateData)
-		resp, err := p.sessionManager.ProcessNsmfUpdateSmContextRequest(smcontextref, smData, n1SmMessage, n2SmMessage, n2SmExt1Message)
-		//sm.ProcessNsmfUpdateSmContextRequest(pdusmsMsg)
-		chanRec := p.apiServer.WatchRecChannel()
-		chanRec <- &api.Receiver{RecievedResponse: resp, RecievedErr: err}
-		return err
+		if err := sm.ProcessNsmfUpdateSmContextRequest(msgInfo.PdusmsMsg); err != nil {
+			metrics.UpdateCounterVec(metrics.CreateFailures, 1, "update_context_error")
+			return err
+		}
+		
 	case sm.NSMF_RELEASE_SM_CONTEXT_REQUEST:
+		metrics.UpdateCounter(metrics.AmfreleaseProcess)
 		// Process pdusms release request
-		n2SmMessage := pdusmsMsg.BinaryDataN2SmInformation
-		smcontextref := pdusmsMsg.SmContextRefID
-		jsonData := pdusmsMsg.SessionMsg
-		smData := jsonData.(openapiserver.SmContextReleaseData)
-		resp, err := p.sessionManager.ProcessNsmfReleaseSmContextRequest(smcontextref, smData, n2SmMessage)
-		//sm.ProcessNsmfReleaseSmContextRequest(pdusmsMsg)
-		chanRec := p.apiServer.WatchRecChannel()
-		chanRec <- &api.Receiver{RecievedResponse: resp, RecievedErr: err}
-		return err
+		if err := sm.ProcessNsmfReleaseSmContextRequest(msgInfo.PdusmsMsg); err != nil {
+			metrics.UpdateCounterVec(metrics.CreateFailures, 1, "release_context_error")
+			return err
+		}
+		
 	case sm.NSMF_RETRIEVE_SM_CONTEXT_REQUEST:
+		metrics.UpdateCounter(metrics.AmfretrieveProcess)
 		// Process pdusms retrieve request
-		smcontextref := pdusmsMsg.SmContextRefID
-		jsonData := pdusmsMsg.SessionMsg
-		smData := jsonData.(openapiserver.SmContextRetrieveData)
-		resp, err := p.sessionManager.ProcessNsmfRetrieveSmContextRequest(smcontextref, smData)
-		//sm.ProcessNsmfRetrieveSmContextRequest(pdusmsMsg)
-		chanRec := p.apiServer.WatchRecChannel()
-		chanRec <- &api.Receiver{RecievedResponse: resp, RecievedErr: err}
-		return err
-	case sm.NSMF_N1_N2_TRANSFER:
-		recGrpcMsg := (*msgInfo.GrpcMsg.GrpcMsg).(*protos.N1N2MessageTransferDataRequest)
-		//hardcoded for now
-		// ip := "pdusmsp-service.pdusmsp.svc.cluster.local" //change to amf IP based on certain conditions // to ask Guru
-		ip := "csp-service.csp.svc.cluster.local"
-		p.sessionManager.ProcessN1N2Message(recGrpcMsg, ip)
+		if err := sm.ProcessNsmfRetrieveSmContextRequest(msgInfo.PdusmsMsg); err != nil {
+			metrics.UpdateCounterVec(metrics.CreateFailures, 1, "retrieve_context_error")
+			return err
+		}
 	}
 	return nil
 }

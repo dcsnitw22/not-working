@@ -3,11 +3,16 @@
 package metrics
 
 import (
+	"sync"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
 var (
+	// Mutex for metrics synchronization
+	metricsMutex sync.RWMutex
+
 	// Registration metrics
 	RegistrationAttempts = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "amf_registration_operations_total",
@@ -94,3 +99,34 @@ var (
 		Help: "The total number of session creation attempts",
 	})
 )
+
+// Thread-safe metric update functions
+func UpdateCounter(counter prometheus.Counter) {
+	metricsMutex.Lock()
+	defer metricsMutex.Unlock()
+	counter.Inc()
+}
+
+func UpdateCounterVec(counterVec *prometheus.CounterVec, value float64, labels ...string) {
+	metricsMutex.Lock()
+	defer metricsMutex.Unlock()
+	counterVec.WithLabelValues(labels...).Add(value)
+}
+
+func UpdateGauge(gauge prometheus.Gauge, value float64) {
+	metricsMutex.Lock()
+	defer metricsMutex.Unlock()
+	gauge.Set(value)
+}
+
+func UpdateGaugeVec(gaugeVec *prometheus.GaugeVec, value float64, labels ...string) {
+	metricsMutex.Lock()
+	defer metricsMutex.Unlock()
+	gaugeVec.WithLabelValues(labels...).Set(value)
+}
+
+func UpdateHistogram(histogram *prometheus.HistogramVec, value float64, labels ...string) {
+	metricsMutex.Lock()
+	defer metricsMutex.Unlock()
+	histogram.WithLabelValues(labels...).Observe(value)
+}
